@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+   
+</head>
+<style>
+     p {font-size: 16px;}
+  .margin {margin-bottom: 25px;}
+  .bg-1 { 
+    background-color: #1abc9c; /* Green */
+    color: #ffffff;
+  }
+  .bg-2 { 
+    background-color: yellow; /* Dark Blue */
+    color: #ffffff;
+  }
+  .bg-3 { 
+    background-color: #ffffff; /* White */
+    color: #fff;
+  }
+  .bg-4 { 
+    background-color: #576574; /* Black Gray */
+    color: #fff;
+  }
+  .container-fluid {
+    padding-top: 0px;
+    padding-bottom: 3px;
+  }
+  .navbar {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border: 0;
+    border-radius: 0;
+    margin-bottom: 0;
+    font-size: 28px;
+    letter-spacing: 3px;
+    height: auto;
+    font-weight: bold;
+    text-align: center;
+  }
+  .navbar-nav  li a:hover {
+    color: white !important;
+  }
+
+  .navbar-default .navbar-nav>li>a{
+   text-align: center; 
+    color: #7eb415;
+  }
+  .navbar-default .navbar-brand {
+    color: #fff;
+}
+</style>
+<body>
+    <nav class="navbar navbar-default" style="background-color: #222f3e">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>                        
+            </button>
+            <a class="navbar-brand" href="#">JIRA GET WorkLog</a>
+          </div>
+          <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+          </div>
+        </div>
+        
+      </nav>
+      <br>
+    <form action="{{ url_for('getWorklog')}}" method="POST">
+		<p>Enter Details</p>
+		<!-- <input type="text" name="comment"/> -->
+        Username:<input type="text" name="username" >
+        Password:<input type="text" name="password" >
+        Key:<input type="text" name="issueKey" >
+		
+
+        <input type="submit" class="btn-info" value="Submit">
+        <br>
+        <br>
+        
+        {% if nt %}
+        <hr>
+        <br>
+        <br>
+       <h2 style="text-align: center;font-weight: bold;"> JIRA Worklogs for Issue Key: {{key}}</h2>
+		<table class="table table-striped" style="border: 1px solid grey;margin: auto;width: 80%;">
+            <tr class="thead-dark">
+                <th>Avatar</th>
+                <td></td>
+                <th>Name</th>
+                <th>email</th>
+                <th>Comment</th>
+                <th>Started</th>
+                <th>Time Spent</th>
+            </tr>
+            
+            {% for key, value in nt.items() %}
+               
+            {% if key == 'worklogs' %}
+            {% for k in value %}
+            <tr>
+                <td><img src="{{ k['author']['avatarUrls']['16x16']}}" /></td>
+                <td></td>
+               <td>{{k['author']['displayName']}}</td>
+               <td>{{k['author']['emailAddress']}}</td>
+               {% if k['comment'] != "" %}
+               <td>{{k['comment']}}</td>
+               {% elif k['comment'] == '' %}
+               <td>No comment</td>
+               {% endif %}
+               <td>{{k['started']}}</td>
+               <td>{{k['timeSpent']}}</td>
+            </tr>
+            {% endfor %}
+            {% endif %}
+            
+       
+     
+    {% endfor %}
+            
+           
+            </table>
+            {% endif %}
+    </form>
+    
+
+    
+</body>
+
+</html>

@@ -1,0 +1,140 @@
+<html>  
+ <head>  
+  <title>JIRA Add log</title>  
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<style>
+.navbar {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border: 0;
+    border-radius: 0;
+    margin-bottom: 0;
+    font-size: 28px;
+    letter-spacing: 3px;
+    height: auto;
+    font-weight: bold;
+    text-align: center;
+  }
+  .navbar-nav  li a:hover {
+    color: white !important;
+  }
+
+  .navbar-default .navbar-nav>li>a{
+   text-align: center; 
+    color: #7eb415;
+  }
+  .navbar-default .navbar-brand {
+    color: #fff;
+}
+.input-wrapper div {
+    margin-bottom: 10px;
+}
+.remove-input {
+    margin-top: 10px;
+    margin-left: 15px;
+    vertical-align: text-bottom;
+}
+.add-input {
+    margin-top: 10px;
+    margin-left: 10px;
+    vertical-align: text-bottom;
+}
+</style>
+ </head>  
+ <body>  
+    
+
+    <nav class="navbar navbar-default" style="background-color: #222f3e">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>                        
+            </button>
+            <a class="navbar-brand" href="#" style="color: white;">JIRA Post WorkLog</a>
+          </div>
+          <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+          </div>
+        </div>
+        
+      </nav>
+      <br>
+  <div style="width:85%;padding:50px;">  
+    
+    {% if message %}
+          <div class="alert alert-success">{{message}}</div>
+    {% endif %}
+    <form method="POST" >
+        <div style="width: 80%;height: 40px;margin-bottom: 10px;">
+        <div class="col-xs-3">
+        <h5>Username:</h5><input type="text" name="username" value="" placeholder="Username" class="form-control"/>
+        </div>
+        <div class="col-xs-3">
+        <h5>Password:</h5><input type="text" name="password" value="" placeholder="Password" class="form-control"/>
+        </div>
+        </div>
+        <br>
+        <br>
+        <div class="input-wrapper form-group">
+        <div class="col-xs-2">
+           <h5>Key:</h5><input type="text" name="key[]" value="" class="form-control" placeholder="Key"/>
+        </div>  <div class="col-xs-3">
+            <h5>Comment:</h5><input type="text" name="comment[]" value="" class="form-control" placeholder="Comment"/>
+        </div>  <div class="col-xs-3">
+            <h5>Time Spent:</h5><input type="text" name="timeSpent[]" value="" class="form-control" placeholder="Time Spent in Sec"/>
+        </div>  <div class="col-xs-3">
+            <h5>Date:</h5><input type="datetime-local" name="date[]" value="" class="form-control" placeholder="Date"/>
+        </div>
+        <div class="col-xs-1">
+            <a  class="add-input" title="Add input"><img style="width:50px;height:20px" src="/static/download.jpg"/></a>
+            </div>
+            <br>    
+        </div>
+      
+        <div class="col-xs-12">
+           <br>
+           <hr>
+           <br>
+        <input type="submit" name="submit" style="background-color: red;width: 100px;height: 50px;float: right;border: 1px solid red;border-radius: 5px;font-weight: bolder;"/>
+        </div>
+    </form>
+   
+  </div>  
+  {% if nt %}
+  {% if nt != 201 %}
+  <div style="text-align: center;width: 200px;height: 40px;background-color: crimson;"><h2>Failure</h2></div>
+  {% elif nt == 201 %}
+  <div style="text-align: center;width: 200px;height: 40px;background-color: greenyellow;"></div>><h2>Success</h2></div>
+  {% endif %}
+  {% endif %}
+<script>
+$(document).ready(function(){
+    var max_input_fields = 10;
+    var add_input = $('.add-input');
+    var input_wrapper = $('.input-wrapper');
+    var new_input = '<div class="col-xs-2">Key:<input type="text" name="key[]" value="" class="form-control" placeholder="Key"/></div>  <div class="col-xs-3">Comment:<input type="text" name="comment[]" value="" class="form-control" placeholder="Comment"/></div>  <div class="col-xs-3">Time Spent:<input type="text" name="timeSpent[]" value="" class="form-control" placeholder="Time Spent in Sec"/></div>  <div class="col-xs-3">Date:<input type="date" name="date[]" value="" class="form-control" placeholder="Date"/></div>  <div class="col-xs-1"><button href="javascript:void(0);" class="remove-input" title="Remove input" value="Remove">Remove</button></div>';
+    var add_input_count = 1; 
+    $(add_input).click(function(){
+        if(add_input_count < max_input_fields){
+            add_input_count++; 
+            $(input_wrapper).append(new_input); 
+        }
+    });
+    $(input_wrapper).on('click', '.remove-input', function(e){
+        e.preventDefault();
+        $(this).parent('div').remove();
+        add_input_count--;
+    });
+});
+</script>
+ </body>  
+</html>  
