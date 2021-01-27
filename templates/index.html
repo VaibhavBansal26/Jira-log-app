@@ -121,7 +121,7 @@ $(document).ready(function(){
     var max_input_fields = 10;
     var add_input = $('.add-input');
     var input_wrapper = $('.input-wrapper');
-    var new_input = '<div class="col-xs-2">Key:<input type="text" name="key[]" value="" class="form-control" placeholder="Key"/></div>  <div class="col-xs-3">Comment:<input type="text" name="comment[]" value="" class="form-control" placeholder="Comment"/></div>  <div class="col-xs-3">Time Spent:<input type="text" name="timeSpent[]" value="" class="form-control" placeholder="Time Spent in Sec"/></div>  <div class="col-xs-3">Date:<input type="date" name="date[]" value="" class="form-control" placeholder="Date"/></div>  <div class="col-xs-1"><button href="javascript:void(0);" class="remove-input" title="Remove input" value="Remove">Remove</button></div>';
+    var new_input = '<div ><div class="col-xs-2">Key:<input type="text" name="key[]" value="" class="form-control" placeholder="Key"/></div>  <div class="col-xs-3">Comment:<input type="text" name="comment[]" value="" class="form-control" placeholder="Comment"/></div>  <div class="col-xs-3">Time Spent:<input type="text" name="timeSpent[]" value="" class="form-control" placeholder="Time Spent in Sec"/></div>  <div class="col-xs-3">Date:<input type="datetime-local" name="date[]" value="" class="form-control" placeholder="Date"/></div>  <div class="col-xs-1"><button href="javascript:void(0);" class="remove-input" title="Remove input" value="Remove">Remove</button></div></div>';
     var add_input_count = 1; 
     $(add_input).click(function(){
         if(add_input_count < max_input_fields){
@@ -131,7 +131,7 @@ $(document).ready(function(){
     });
     $(input_wrapper).on('click', '.remove-input', function(e){
         e.preventDefault();
-        $(this).parent('div').remove();
+        $(this).parent('div>').parent('div').remove();
         add_input_count--;
     });
 });
