@@ -68,7 +68,7 @@ def postWork():
             )
             print(response)
     except:
-        return jsonify({'trace': traceback.format_exc()})
+        return render_template('error.html')
     return render_template('postWork.html')
 
 
@@ -100,18 +100,27 @@ def postWorklog():
             print(m)
             tSpent = []
             for j in timeSpent:
-                j="".join(j.split())
+                j="".join(j.split()).lower()
                 l1=[]
                 m1=[]
+                r=True
                 s1=""
                 for i in j:
-                    if i.isalpha():
+                    if i.isalpha() and r==False:
                         m1.append(i)
                         k1=int(s1)
                         l1.append(k1)
+                        r=True
                         s1=""
                     elif i.isdigit():
-                        s1+=i    
+                        s1+=i
+                        r=False
+                    elif i.isalpha() and r==True:
+                        s+='0'
+                        k=int(s)
+                        m.append(i)
+                        l1.append(k)
+                        s=""    
                 t1=0
                 for x1,y1 in zip(m1,l1):
                     if x1=='w':
@@ -155,11 +164,16 @@ def postWorklog():
                 headers=headers
                 )
                 en1=response.status_code
-                print(en1)    
+                print(en1)
+                now = datetime.now()
+                now_time = now.strftime("%b-%d-%Y %H:%M:%S")
+                print(now_time)
+        else:
+            return render_template('error.html')    
     except:
-        return redirect(url_for('errors'))
+        return render_template('error.html')
 
-    return render_template('index.html',ent=en1,keys=key,comments=comment,timeSpents=timeSpent,dates=date,fol=zip(key1,comment1,timeSpent1,date1))
+    return render_template('index.html',user=username,n_time=now_time,ent=en1,keys=key,comments=comment,timeSpents=timeSpent,dates=date,fol=zip(key1,comment1,timeSpent1,date1))
 
 
 '''
@@ -178,19 +192,27 @@ def postWorklog():
             message_bytes = message.encode('ascii')
             base64_bytes = base64.b64encode(message_bytes)
             base64_message = base64_bytes.decode('ascii')
+            print(key)
+            print(comment)
+            print(timeSpent)
+            print(date)
             key1=key[1:]
             comment1=comment[1:]
             timeSpent1=timeSpent[1:]
             date1=date[1:]
             en1=201
             print(en1)
+            now = datetime.now()
+            now_time = now.strftime("%b-%d-%Y %H:%M:%S")
+            print(now_time)
+        else:
+            return render_template('error.html')
     except:
-        return redirect(url_for('errors'))jsonify({'trace': traceback.format_exc()})
+        return render_template('error.html')
 
-    return render_template('index.html',ent=en1,keys=key,comments=comment,timeSpents=timeSpent,dates=date,fol=zip(key1,comment1,timeSpent1,date1))
+    return render_template('index.html',user=username,n_time=now_time,ent=en1,keys=key,comments=comment,timeSpents=timeSpent,dates=date,fol=zip(key1,comment1,timeSpent1,date1))
 
 '''
-
 
 @app.route('/getWorklog',methods=['GET','POST'])
 def getWorklog():
