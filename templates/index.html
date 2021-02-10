@@ -109,17 +109,36 @@ button[disabled]:hover{
  
         <div class="alert alert-danger" id="successMessage" style="display: none;"><strong>Failure : Check form for Errors </strong></div>
         
-        {% if ent %}    
+        {% if res %}
+        <div class="alert alert-success" id="successMessage"><strong>Success : Last Submission recorded at : {{n_time}} </strong><br>
+          Successful: {{r_q}} Unsuccessful: {{un_q}} <br>
+          {% if un_q %}
+          Check for Problem in queries at
+          {% for i in ind %}
+          {{i}}
+          {% endfor %}position
+          {% endif %}</div>
+        {% endif %}
+        
+        {% if res == False %}
+        {% if ent %}  
         {% if ent == 500 %}
           <div class="alert alert-danger" id="successMessage"><strong>Failure : Server error </strong></div>
-        {% elif ent == 201 %}
-          <div class="alert alert-success" id="successMessage"><strong>Success : Last Submission recorded on {{n_time}}</strong></div>
+         
         {% elif ent == 401 %}
           <div class="alert alert-danger" id="successMessage"><strong>Failure : Login Credentials are incorrect </strong></div>
+         
         {% elif ent == 400 %}
           <div class="alert alert-danger" id="successMessage"><strong>Failure : Issue not found or the user does not have permission to view it. </strong></div>
+          
+        {% elif ent == 403 %}
+          <div class="alert alert-danger" id="successMessage"><strong>Failure : Forbidden Error 403. </strong></div>
+         
         {% else %}
           <div class="alert alert-danger" id="successMessage"><strong>Failure : Error detected. Try Again....</strong></div>
+          
+        {% endif %}
+        
         {% endif %}
         {% endif %}
    
@@ -358,7 +377,7 @@ $(document).ready(function(){
 </html>  
 
 
-<!--Script for fading Success message after 30s-->>
+<!--Script for fading Success message after 30s-->
  <!--- <script>
     $(document).ready(function(){
       setTimeout(function() {

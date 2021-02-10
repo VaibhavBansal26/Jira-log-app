@@ -114,7 +114,7 @@ def postWorklog():
                     elif x1=='s':
                         t1+=y1
                 tSpent.append(t1)
-
+            rc=[]
             for a,b,c,d in zip(key,comment,tSpent,date):
                 url = "https://jira.verifone.com/rest/api/2/issue/"+a+"/worklog"
                 headers = {
@@ -141,16 +141,31 @@ def postWorklog():
                 headers=headers
                 )
                 en1=response.status_code
-                print(en1)
+                rc.append(en1)
                 now = datetime.now()
                 now_time = now.strftime("%b-%d-%Y %H:%M:%S")
                 print(now_time)
+            print(rc)
+            w=[]
+            count=0
+            for i in range(0,len(rc)-1):
+                if rc[i] == 201:
+                    count+=1
+                else:
+                    w.append(i+1)
+            tot_q=len(rc)
+            s_q=abs(len(rc)-len(w))
+            uns_q=len(w)
+            if 201 in rc:
+                q=True
+            else:
+                q=False                
         else:
             return render_template('error.html')    
     except:
         return jsonify({'trace': traceback.format_exc()})
 
-    return render_template('index.html',user=username,n_time=now_time,ent=en1,keys=key,comments=comment,timeSpents=timeSpent,dates=date,fol=zip(key1,comment1,timeSpent1,date1))
+    return render_template('index.html',res=q,rcs=rc,r_q=s_q,sq=tot_q,un_q=uns_q,cnt=count,ind=w,user=username,n_time=now_time,ent=en1,keys=key,comments=comment,timeSpents=timeSpent,dates=date,fol=zip(key1,comment1,timeSpent1,date1))
 
 ##TESTING CODE -------------------------------------------------------------------------------------------
 '''
@@ -182,12 +197,27 @@ def postWorklog():
             now = datetime.now()
             now_time = now.strftime("%b-%d-%Y %H:%M:%S")
             print(now_time)
+            l=[202,401,402,403]
+            w=[]
+            count=0
+            for i in range(0,len(l)-1):
+                if l[i] == 201:
+                    count+=1
+                else:
+                    w.append(i+1)
+            tot_q=len(l)
+            s_q=abs(len(l)-len(w))
+            uns_q=len(w)
+            if 201 in l:
+                q=True
+            else:
+                q=False
         else:
             return render_template('error.html')
     except:
         return jsonify({'trace': traceback.format_exc()})
 
-    return render_template('index.html',user=username,n_time=now_time,ent=en1,keys=key,comments=comment,timeSpents=timeSpent,dates=date,fol=zip(key1,comment1,timeSpent1,date1))
+    return render_template('index.html',res=q,rcs=l,r_q=s_q,sq=tot_q,un_q=uns_q,cnt=count,ind=w,user=username,n_time=now_time,ent=en1,keys=key,comments=comment,timeSpents=timeSpent,dates=date,fol=zip(key1,comment1,timeSpent1,date1))
 
 '''
 
