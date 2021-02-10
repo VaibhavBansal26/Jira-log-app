@@ -37,6 +37,7 @@ def getDashboard():
         }
         url1="https://jira.verifone.com/secure/Dashboard.jspa?selectPageId=33333"
         webbrowser.open_new_tab(url1)
+        return redirect(url1)
         
     except:
         return jsonify({'trace': traceback.format_exc()})
