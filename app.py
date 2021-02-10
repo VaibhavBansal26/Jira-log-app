@@ -6,6 +6,7 @@ import json
 import base64
 import traceback
 from datetime import datetime
+import webbrowser
 
 
 
@@ -22,56 +23,39 @@ def errors():
 @app.route('/login')
 def login():
     return render_template('login.html')
-@app.route('/postLog')
-def postLog():
-    return render_template('postLog.html')
 
-@app.route('/postWork')
-def postWork():
+@app.route('/getDashboard')
+def getDashboard():
     try:
-        if request.method == 'POST':
-            username = request.form['username']
-            password = request.form['password']
-            key=request.form['issueKey']
-            comment='Testing 3'
-            message = "VaibhavB2:Druv@family#21"
-            message_bytes = message.encode('ascii')
-            base64_bytes = base64.b64encode(message_bytes)
+        url = "https://jira.verifone.com/rest/api/2/dashboard/33333"
 
-            base64_message = base64_bytes.decode('ascii')
+        #auth = HTTPBasicAuth("email@example.com", "<api_token>")
 
-            print(base64_message)
-            print(key)
+        headers = {
+            "Authorization": "Basic ###############",
+            "Accept": "application/json"
+        }
+        url1="https://jira.verifone.com/secure/Dashboard.jspa?selectPageId=33333"
 
-            url = "https://jira.verifone.com/rest/api/2/issue/"+key+"/worklog"
-
-            #auth = HTTPBasicAuth("thesimpleguy03@gmail.com", "DW6fA0f8avNxLBNKVELa94C4")
-            print(url)
-
-            headers = {
-            "Authorization": "Basic VmFpYmhhdkIyOkRydXZAZmFtaWx5IzIx",
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-            }
-
-            payload = json.dumps( {
-            "timeSpentSeconds": 1905,
-            "comment":"Testing4",
-            "started": "2021-01-20T06:40:40.885+0000"
-            } )
-
-            response = requests.request(
-            "POST",
-            url,
-            data=payload,
-            headers=headers
-            )
-            print(response)
+        #response = requests.request(
+        #"GET",
+        #url,
+        #headers=headers,
+        
+        #)
+        #s=json.dumps(json.loads(response.text))
+        #print(json.dumps(json.loads(response.text), sort_keys=True, indent=4, separators=(",", ": ")))
+        #print(s)
+        #print(response.json())
+        #m=response.json()
+        #print(m["view"])
+        webbrowser.open_new_tab(url1)
+        return redirect('/')
     except:
-        return render_template('error.html')
-    return render_template('postWork.html')
+        return jsonify({'trace': traceback.format_exc()})
+    
 
-
+#POST WORK LOG------------------------------------------------------------
 @app.route('/postWorklog',methods=['GET','POST'])
 def postWorklog():
     try:
@@ -91,13 +75,16 @@ def postWorklog():
             message_bytes = message.encode('ascii')
             base64_bytes = base64.b64encode(message_bytes)
             base64_message = base64_bytes.decode('ascii')
+
             print(base64_message)
             print(key)
             print(comment)
             print(timeSpent)
             print(date)
+
             m=datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
             print(m)
+
             tSpent = []
             for j in timeSpent:
                 j="".join(j.split()).lower()
@@ -138,6 +125,7 @@ def postWorklog():
                     elif x1=='s':
                         t1+=y1
                 tSpent.append(t1)
+
             for a,b,c,d in zip(key,comment,tSpent,date):
                 url = "https://jira.verifone.com/rest/api/2/issue/"+a+"/worklog"
                 headers = {
@@ -171,11 +159,11 @@ def postWorklog():
         else:
             return render_template('error.html')    
     except:
-        return render_template('error.html')
+        return jsonify({'trace': traceback.format_exc()})
 
     return render_template('index.html',user=username,n_time=now_time,ent=en1,keys=key,comments=comment,timeSpents=timeSpent,dates=date,fol=zip(key1,comment1,timeSpent1,date1))
 
-
+##TESTING CODE -------------------------------------------------------------------------------------------
 '''
 @app.route('/postWorklog',methods=['GET','POST'])
 def postWorklog():
@@ -208,11 +196,13 @@ def postWorklog():
         else:
             return render_template('error.html')
     except:
-        return render_template('error.html')
+        return jsonify({'trace': traceback.format_exc()})
 
     return render_template('index.html',user=username,n_time=now_time,ent=en1,keys=key,comments=comment,timeSpents=timeSpent,dates=date,fol=zip(key1,comment1,timeSpent1,date1))
 
 '''
+
+#Fetching Logs from JIRA------------------------------------------------------------------------
 
 @app.route('/getWorklog',methods=['GET','POST'])
 def getWorklog():
@@ -222,7 +212,7 @@ def getWorklog():
             password = request.form['password']
             key=request.form['issueKey']
 
-            message = "VaibhavB2:Druv@family#21"
+            message = username+":"+password
             message_bytes = message.encode('ascii')
             base64_bytes = base64.b64encode(message_bytes)
 
@@ -233,11 +223,10 @@ def getWorklog():
 
             url = "https://jira.verifone.com/rest/api/2/issue/"+key+"/worklog"
 
-            #auth = HTTPBasicAuth("thesimpleguy03@gmail.com", "DW6fA0f8avNxLBNKVELa94C4")
             print(url)
 
             headers = {
-            "Authorization": "Basic VmFpYmhhdkIyOkRydXZAZmFtaWx5IzIx",
+            "Authorization": "Basic <api_access token>",
             "Accept": "application/json",
             "Content-Type": "application/json"
             }
@@ -253,7 +242,7 @@ def getWorklog():
     except:
         return jsonify({'trace': traceback.format_exc()})
 
-    return render_template('indexi.html',nt=t,key=key)
+    return render_template('getLogs.html',nt=t,key=key)
 
 
 
