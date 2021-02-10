@@ -36,23 +36,11 @@ def getDashboard():
             "Accept": "application/json"
         }
         url1="https://jira.verifone.com/secure/Dashboard.jspa?selectPageId=33333"
-
-        #response = requests.request(
-        #"GET",
-        #url,
-        #headers=headers,
-        
-        #)
-        #s=json.dumps(json.loads(response.text))
-        #print(json.dumps(json.loads(response.text), sort_keys=True, indent=4, separators=(",", ": ")))
-        #print(s)
-        #print(response.json())
-        #m=response.json()
-        #print(m["view"])
         webbrowser.open_new_tab(url1)
-        return redirect('/')
+        
     except:
         return jsonify({'trace': traceback.format_exc()})
+    return render_template('index.html')
     
 
 #POST WORK LOG------------------------------------------------------------
