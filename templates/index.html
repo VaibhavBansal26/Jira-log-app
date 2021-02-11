@@ -110,7 +110,7 @@ button[disabled]:hover{
         <div class="alert alert-danger" id="successMessage" style="display: none;"><strong>Failure : Check form for Errors </strong></div>
         
         {% if res %}
-        <div class="alert alert-success" id="successMessage"><strong>Success : Last Submission recorded at : {{n_time}} </strong><br>
+        <div class="alert alert-success" id="successMessage"><strong>Success : Last Submission recorded at : {{n_time}} UTC </strong><br>
           Successful: {{r_q}} Unsuccessful: {{un_q}} <br>
           {% if un_q %}
           Check for Problem in queries at
