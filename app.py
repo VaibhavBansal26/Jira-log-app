@@ -154,8 +154,10 @@ def postWorklog():
                 )
                 en1=response.status_code
                 rc.append(en1)
-                now = datetime.utcnow()
-                now_time = now.strftime("%b-%d-%Y %H:%M:%S")
+                now=datetime.now()
+                local = tzlocal()
+                now = now.replace(tzinfo = local)
+                now_time = now.astimezone(local).strftime("%b-%d-%Y %H:%M:%S")
                 print(now_time)
             print(rc)
             w=[]
