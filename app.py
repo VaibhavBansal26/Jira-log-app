@@ -154,7 +154,7 @@ def postWorklog():
                 )
                 en1=response.status_code
                 rc.append(en1)
-                now = datetime.now()
+                now = datetime.utcnow()
                 now_time = now.strftime("%b-%d-%Y %H:%M:%S")
                 print(now_time)
             print(rc)
