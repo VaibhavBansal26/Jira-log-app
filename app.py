@@ -7,7 +7,6 @@ import base64
 import traceback
 from datetime import datetime
 from datetime import timezone
-import pytz
 from dateutil.tz import *
 import webbrowser
 
@@ -46,7 +45,7 @@ def getDashboard():
         return jsonify({'trace': traceback.format_exc()})
     return render_template('index.html')
     
-'''
+
 #POST WORK LOG------------------------------------------------------------
 @app.route('/postWorklog',methods=['GET','POST'])
 def postWorklog():
@@ -242,7 +241,7 @@ def postWorklog():
     return render_template('index.html',res=q,rcs=l,r_q=s_q,sq=tot_q,un_q=uns_q,cnt=count,ind=w,user=username,n_time=now_time,ent=en1,keys=key,comments=comment,timeSpents=timeSpent,dates=date,fol=zip(key1,comment1,timeSpent1,date1))
 
 
-
+'''
 #Fetching Logs from JIRA------------------------------------------------------------------------
 
 @app.route('/getWorklog',methods=['GET','POST'])
