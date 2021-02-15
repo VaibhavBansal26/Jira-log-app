@@ -70,7 +70,14 @@ button[disabled]:hover{
 }
 
 </style>
+<script>
+$("#res").click(function(){
+ // $("#successMessage").css("display", "none");
+ // $("input[type=text], textarea,input[type=password]").val("");
 
+  window.location="/"
+});
+</script>
 
 <script type="text/javascript">
   $(function(){
@@ -97,7 +104,7 @@ button[disabled]:hover{
           </div>
           <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav navbar-right" style="margin-top: 15px;">
-              <li class="head"><a href="{{url_for('index')}}" style="text-decoration: none;font-size: 16px;color: white;" >Home</a></li>
+         <!--     <li class="head"><a href="{{url_for('index')}}" style="text-decoration: none;font-size: 16px;color: white;" >Home</a></li>-->
               <li class="head"><a href="{{url_for('getDashboard')}}" target="_blank" style="text-decoration:none;font-size:16px;color:white">Dashboard</a></li>
               </ul>
           </div>
@@ -107,10 +114,10 @@ button[disabled]:hover{
 <!--BODY-->
     <div style="width:95%;padding:10px;margin: 20px auto;">  
  
-        <div class="alert alert-danger" id="successMessage" style="display: none;"><strong>Failure : Check form for Errors </strong></div>
+        <div class="alert alert-danger" id="successMessage1" style="display: none;"><strong>Failure : Check form for Errors </strong></div>
         
         {% if res %}
-        <div class="alert alert-success" id="successMessage"><strong>Success : Last Submission recorded at : {{n_time}} UTC </strong><br>
+        <div class="alert alert-success" id="successMessage"><strong>Success : Last Submission recorded at : {{n_time}}  </strong><br>
           Successful: {{r_q}} Unsuccessful: {{un_q}} <br>
           {% if un_q %}
           Check for Problem in queries at
@@ -170,7 +177,7 @@ button[disabled]:hover{
         </div>
         <div class='input-group date col-xs-3 dtpickerdemo'>
           <h5>Date:</h5><span style="display: flex;align-items: center;">
-            <input type='text' class="form-control" name="date[]" value="{% if dates %}{{dates[0]}}{% endif %}" placeholder="YYYY:MM:DD H:m:s.ms" required/>
+            <input type='text' class="form-control" name="date[]" value="" placeholder="{% if dates %}{{dates[0]}}{% else %}YYYY:MM:DD H:m:s.ms{% endif %}" required/>
               <span class="input-group-addon dtc" style="padding: 10px 20px;padding-right: 35px;">
               <span class="glyphicon glyphicon-calendar"></span>
           </span></span>
@@ -248,7 +255,7 @@ button[disabled]:hover{
 
           <div class="input-group date col-xs-3 dtpickerdemo" >
               Date:<span style="display: flex;align-items: center;">
-                      <input type="text" name="date[]" value="{{l}}" class="form-control" placeholder="YYYY:MM:DD H:m:s.ms" required/>
+                      <input type="text" name="date[]" value="" class="form-control" placeholder="{{l}}" required/>
                   <span class="input-group-addon" style="padding: 10px 20px;padding-right: 35px;"> 
                   <span class="glyphicon glyphicon-calendar"></span>
                   </span>
@@ -360,7 +367,9 @@ $(document).ready(function(){
     });
     
     $("#res").click(function(){
-          window.location="/"
+     // $("#successMessage").css("display", "none");
+     // $("input[type=text], textarea,input[type=password]").val("");
+      window.location="/"
       });
 });
 </script>

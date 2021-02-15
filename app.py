@@ -6,6 +6,9 @@ import json
 import base64
 import traceback
 from datetime import datetime
+from datetime import timezone
+import pytz
+from dateutil.tz import *
 import webbrowser
 
 
@@ -43,7 +46,7 @@ def getDashboard():
         return jsonify({'trace': traceback.format_exc()})
     return render_template('index.html')
     
-
+'''
 #POST WORK LOG------------------------------------------------------------
 @app.route('/postWorklog',methods=['GET','POST'])
 def postWorklog():
@@ -126,13 +129,22 @@ def postWorklog():
                 print(b)
                 print(c)
                 print(d)
-                date_time_obj = datetime.strptime(d,'%Y:%m:%d %H:%M:%S.%f').isoformat()
-                print(date_time_obj[:-3])
-                date_time_obj = date_time_obj[:-3]
+                date_time_obj = datetime.strptime(d,'%Y:%m:%d %H:%M:%S.%f')
+                print(str(date_time_obj)[:-3])
+                local = tzutc()
+                date_time_obj = date_time_obj.replace(tzinfo = local)
+                date_time_obj = date_time_obj.astimezone(local).isoformat()
+                g=str(date_time_obj).split("+")
+                print(g)
+                g1=g[1].replace(":","")
+                g2=g[0][:-3]
+                g3=g2+"+"+g1
+                print(g3)
+                print(date_time_obj)
                 payload = json.dumps( {
                 "timeSpentSeconds": c,
                 "comment":b,
-                "started":date_time_obj+"+0000"
+                "started":g3
                 } )
                 response = requests.request(
                 "POST",
@@ -163,7 +175,7 @@ def postWorklog():
         else:
             return render_template('error.html')    
     except:
-        return jsonify({'trace': traceback.format_exc()})
+        return render_template('error.html')
 
     return render_template('index.html',res=q,rcs=rc,r_q=s_q,sq=tot_q,un_q=uns_q,cnt=count,ind=w,user=username,n_time=now_time,ent=en1,keys=key,comments=comment,timeSpents=timeSpent,dates=date,fol=zip(key1,comment1,timeSpent1,date1))
 
@@ -194,10 +206,20 @@ def postWorklog():
             date1=date[1:]
             en1=201
             print(en1)
+            d=date[0]
+            d1=datetime.strptime(d,'%Y:%m:%d %H:%M:%S.%f')
+            print(d1)
             now = datetime.now()
             now_time = now.strftime("%b-%d-%Y %H:%M:%S")
             print(now_time)
-            l=[202,401,402,403]
+            local = tzlocal()
+            now = now.replace(tzinfo = local)
+            now = now.astimezone(local).isoformat()
+            print(now)
+            now1 = d1.replace(tzinfo = local)
+            now1 = d1.astimezone(local).isoformat()
+            print(now1)
+            l=[401,401,401,401]
             w=[]
             count=0
             for i in range(0,len(l)-1):
@@ -219,7 +241,7 @@ def postWorklog():
 
     return render_template('index.html',res=q,rcs=l,r_q=s_q,sq=tot_q,un_q=uns_q,cnt=count,ind=w,user=username,n_time=now_time,ent=en1,keys=key,comments=comment,timeSpents=timeSpent,dates=date,fol=zip(key1,comment1,timeSpent1,date1))
 
-'''
+
 
 #Fetching Logs from JIRA------------------------------------------------------------------------
 
