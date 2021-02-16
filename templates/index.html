@@ -117,7 +117,7 @@ $("#res").click(function(){
         <div class="alert alert-danger" id="successMessage1" style="display: none;"><strong>Failure : Check form for Errors </strong></div>
         
         {% if res %}
-        <div class="alert alert-success" id="successMessage"><strong>Success : Last Submission recorded at : {{n_time}}  </strong><br>
+        <div class="alert alert-success" id="successMessage"><strong>Success : Last Submission recorded at : {{n_time}} UTC </strong><br>
           Successful: {{r_q}} Unsuccessful: {{un_q}} <br>
           {% if un_q %}
           Check for Problem in queries at
@@ -177,7 +177,7 @@ $("#res").click(function(){
         </div>
         <div class='input-group date col-xs-3 dtpickerdemo'>
           <h5>Date:</h5><span style="display: flex;align-items: center;">
-            <input type='text' class="form-control" name="date[]" value="" placeholder="{% if dates %}{{dates[0]}}{% else %}YYYY:MM:DD H:m:s.ms{% endif %}" required/>
+            <input type='text' class="form-control" name="date[]" value="" placeholder="{% if dates %}{{dates[0]}}{% else%}YYYY:MM:DD H:m:s.ms{% endif %}" onfocus="this.placeholder = ''" required/>
               <span class="input-group-addon dtc" style="padding: 10px 20px;padding-right: 35px;">
               <span class="glyphicon glyphicon-calendar"></span>
           </span></span>
@@ -255,7 +255,7 @@ $("#res").click(function(){
 
           <div class="input-group date col-xs-3 dtpickerdemo" >
               Date:<span style="display: flex;align-items: center;">
-                      <input type="text" name="date[]" value="" class="form-control" placeholder="{{l}}" required/>
+                      <input type="text" name="date[]" value="" class="form-control" placeholder="{{l}}" onfocus="this.placeholder = ''" required/>
                   <span class="input-group-addon" style="padding: 10px 20px;padding-right: 35px;"> 
                   <span class="glyphicon glyphicon-calendar"></span>
                   </span>

@@ -46,7 +46,7 @@ def getDashboard():
         return jsonify({'trace': traceback.format_exc()})
     return render_template('index.html')
     
-
+'''
 #POST WORK LOG------------------------------------------------------------
 @app.route('/postWorklog',methods=['GET','POST'])
 def postWorklog():
@@ -287,7 +287,7 @@ def getWorklog():
 
     return render_template('getLogs.html',nt=t,key=key)
 
-
+'''
 
 if __name__ == "__main__":
     print("App Runs")
