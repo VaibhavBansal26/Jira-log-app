@@ -59,10 +59,12 @@ def postWorklog():
             comment = request.form.getlist('comment[]')
             timeSpent = request.form.getlist('timeSpent[]')
             date = request.form.getlist('date[]')
+            dat1 = request.form.getlist('dat1[]')
             key1=key[1:]
             comment1=comment[1:]
             timeSpent1=timeSpent[1:]
             date1=date[1:]
+            dat11=dat1[1:]
             message = username+":"+password
             message_bytes = message.encode('ascii')
             base64_bytes = base64.b64encode(message_bytes)
@@ -129,13 +131,14 @@ def postWorklog():
                 print(b)
                 print(c)
                 print(d)
-                date_time_obj = datetime.strptime(d,'%Y:%m:%d %H:%M:%S.%f')
-                print(str(date_time_obj)[:-3])
-                local = tzlocal()
-                date_time_obj = date_time_obj.replace(tzinfo = local)
-                date_time_obj = date_time_obj.astimezone(local).isoformat()
+                date_time_obj=d
+                #date_time_obj = datetime.strptime(d,'%Y:%m:%d %H:%M:%S.%f')
+                #print(str(date_time_obj)[:-3])
+                #local = tzlocal()
+                #date_time_obj = date_time_obj.replace(tzinfo = local)
+                #date_time_obj = date_time_obj.astimezone(local).isoformat()
                 g1=str(date_time_obj)[-6:]
-                g=str(date_time_obj)[:-9]
+                g=str(date_time_obj)[:-6]
                 g1=g1.replace(":","")
                 g3=g+g1
                 print(g3)
@@ -179,7 +182,7 @@ def postWorklog():
     except:
         return render_template('error.html')
 
-    return render_template('index.html',res=q,rcs=rc,r_q=s_q,sq=tot_q,un_q=uns_q,cnt=count,ind=w,user=username,n_time=now_time,ent=en1,keys=key,comments=comment,timeSpents=timeSpent,dates=date,fol=zip(key1,comment1,timeSpent1,date1))
+    return render_template('index.html',res=q,rcs=rc,r_q=s_q,sq=tot_q,un_q=uns_q,cnt=count,ind=w,user=username,n_time=now_time,ent=en1,keys=key,comments=comment,timeSpents=timeSpent,dates=date,dat1s=dat1,fol=zip(key1,comment1,timeSpent1,date1,dat11))
 
 ##TESTING CODE -------------------------------------------------------------------------------------------
 '''
@@ -194,6 +197,7 @@ def postWorklog():
             comment = request.form.getlist('comment[]')
             timeSpent = request.form.getlist('timeSpent[]')
             date = request.form.getlist('date[]')
+            dat1 = request.form.getlist('dat1[]')
             message = username+":"+password
             message_bytes = message.encode('ascii')
             base64_bytes = base64.b64encode(message_bytes)
@@ -202,11 +206,13 @@ def postWorklog():
             print(comment)
             print(timeSpent)
             print(date)
+            print(dat1)
             key1=key[1:]
             comment1=comment[1:]
             timeSpent1=timeSpent[1:]
             date1=date[1:]
-            en1=201
+            dat11=dat1[1:]
+            en1=401
             print(en1)
             d=date[0]
             d1=datetime.strptime(d,'%Y:%m:%d %H:%M:%S.%f')
@@ -241,7 +247,7 @@ def postWorklog():
     except:
         return jsonify({'trace': traceback.format_exc()})
 
-    return render_template('index.html',res=q,rcs=l,r_q=s_q,sq=tot_q,un_q=uns_q,cnt=count,ind=w,user=username,n_time=now_time,ent=en1,keys=key,comments=comment,timeSpents=timeSpent,dates=date,fol=zip(key1,comment1,timeSpent1,date1))
+    return render_template('index.html',res=q,rcs=l,r_q=s_q,sq=tot_q,un_q=uns_q,cnt=count,ind=w,user=username,n_time=now_time,ent=en1,keys=key,comments=comment,timeSpents=timeSpent,dates=date,dat1s=dat1,fol=zip(key1,comment1,timeSpent1,date1,dat11))
 
 
 '''
