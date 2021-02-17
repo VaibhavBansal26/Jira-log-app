@@ -133,12 +133,11 @@ def postWorklog():
                 print(str(date_time_obj)[:-3])
                 local = tzlocal()
                 date_time_obj = date_time_obj.replace(tzinfo = local)
-                date_time_obj = date_time_obj.astimezone(local).isoformat()
-                g=str(date_time_obj).split("+")
-                print(g)
-                g1=g[1].replace(":","")
-                g2=g[0][:-3]
-                g3=g2+"+"+g1
+                date_time_obj = date_time_obj.astimezone(pytz.UTC).isoformat()
+                g1=str(date_time_obj)[-6:]
+                g=str(date_time_obj)[:-9]
+                g1=g1.replace(":","")
+                g3=g+g1
                 print(g3)
                 print(date_time_obj)
                 payload = json.dumps( {
