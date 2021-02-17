@@ -120,7 +120,7 @@ def postWorklog():
                         t1+=y1
                 tSpent.append(t1)
             rc=[]
-            for a,b,c,d in zip(key,comment,tSpent,date):
+            for a,b,c,d in zip(key,comment,tSpent,dat1):
                 url = "https://jira.verifone.com/rest/api/2/issue/"+a+"/worklog"
                 headers = {
                 "Authorization": "Basic "+base64_message,
