@@ -131,7 +131,7 @@ def postWorklog():
                 print(d)
                 date_time_obj = datetime.strptime(d,'%Y:%m:%d %H:%M:%S.%f')
                 print(str(date_time_obj)[:-3])
-                local = tzlocal()
+                local = tzutc()
                 date_time_obj = date_time_obj.replace(tzinfo = local)
                 date_time_obj = date_time_obj.astimezone(pytz.UTC).isoformat()
                 g1=str(date_time_obj)[-6:]
