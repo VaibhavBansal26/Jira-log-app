@@ -156,7 +156,8 @@ def postWorklog():
                 now=datetime.now()
                 local = tzlocal()
                 now = now.replace(tzinfo = local)
-                now_time = now.astimezone(local).strftime("%b-%d-%Y %H:%M:%S")
+                #now_time = now.astimezone(local).strftime("%b-%d-%Y %H:%M:%S")
+                now_time = now.astimezone(local).isoformat()
                 print(now_time)
             print(rc)
             w=[]
