@@ -165,7 +165,7 @@ def postWorklog():
             print(rc)
             w=[]
             count=0
-            for i in range(0,len(rc)-1):
+            for i in range(0,len(rc)):
                 if rc[i] == 201:
                     count+=1
                 else:
@@ -227,7 +227,7 @@ def postWorklog():
             now1 = d1.replace(tzinfo = local)
             now1 = d1.astimezone(local).isoformat()
             print(now1)
-            l=[401,401,401,401]
+            l=[201,401,401,401]
             w=[]
             count=0
             for i in range(0,len(l)-1):
@@ -249,8 +249,8 @@ def postWorklog():
 
     return render_template('index.html',res=q,rcs=l,r_q=s_q,sq=tot_q,un_q=uns_q,cnt=count,ind=w,user=username,n_time=now_time,ent=en1,keys=key,comments=comment,timeSpents=timeSpent,dates=date,dat1s=dat1,fol=zip(key1,comment1,timeSpent1,date1,dat11))
 
-'''
 
+'''
 #Fetching Logs from JIRA------------------------------------------------------------------------
 
 @app.route('/getWorklog',methods=['GET','POST'])
