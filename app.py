@@ -249,8 +249,8 @@ def postWorklog():
 
     return render_template('index.html',res=q,rcs=l,r_q=s_q,sq=tot_q,un_q=uns_q,cnt=count,ind=w,user=username,n_time=now_time,ent=en1,keys=key,comments=comment,timeSpents=timeSpent,dates=date,dat1s=dat1,fol=zip(key1,comment1,timeSpent1,date1,dat11))
 
-
 '''
+
 #Fetching Logs from JIRA------------------------------------------------------------------------
 
 @app.route('/getWorklog',methods=['GET','POST'])
