@@ -89,6 +89,8 @@ $("#res").click(function(){
     console.log(j)
     console.log(typeof j)
     if (j=== null){
+      s =  s.replace(/[\[\]']+/g, '');
+      s =  s.replace(/&#39;/g, '');
       localStorage.setItem("mytime", s);
     }else{
 
@@ -128,42 +130,47 @@ $("#res").click(function(){
   <script>
   function readValue() {
     var x = localStorage.getItem("mytime");
-    console.log(typeof x)
-    x= x.replace(/&#39;/g, '')
-    console.log(x)
-    var arrc = x.split(",");
-    console.log(arrc)
-    var v=""
-    arrq= new Array(arrc.length-1)
-    for(var i=0;i<arrc.length;i++){
-      if(i == arrc.length-1){
-        arrc[i]=arrc[i].replace(/&#39;/g,'')
-        arrc[i]=arrc[i].trim()
-        arrq[i]=arrc[i]
-        v+=arrc[i]
-      }else{
-        arrc[i]=arrc[i].replace(/&#39;/g,'')
-        arrc[i]=arrc[i].trim()
-        arrq[i]=arrc[i]
-        v+=arrc[i]
-        v+=", "
+    if(x == null){
+      document.getElementById("successMessage1").innerHTML ="Sorry, You have not used any tickets yet";
+      document.getElementById("successMessage1").style.visibility="visible";
+    }else{
+      console.log(typeof x)
+      x= x.replace(/&#39;/g, '')
+      console.log(x)
+      var arrc = x.split(",");
+      console.log(arrc)
+      var v=""
+      arrq= new Array(arrc.length-1)
+      for(var i=0;i<arrc.length;i++){
+        if(i == arrc.length-1){
+          arrc[i]=arrc[i].replace(/&#39;/g,'')
+          arrc[i]=arrc[i].trim()
+          arrq[i]=arrc[i]
+          v+=arrc[i]
+        }else{
+          arrc[i]=arrc[i].replace(/&#39;/g,'')
+          arrc[i]=arrc[i].trim()
+          arrq[i]=arrc[i]
+          v+=arrc[i]
+          v+=", "
+        }
       }
-    }
-    var d = [...new Set(arrc)]
-    var ss = String(d)
-    var sa = ss.split(",")
-    var si = ""
-    for(var a=0;(a < sa.length && a<5);a++){
-      if(a==4){
-        si+=sa[a]
-      }else{
-        si+=sa[a]+"| &nbsp&nbsp"
+      var d = [...new Set(arrc)]
+      var ss = String(d)
+      var sa = ss.split(",")
+      var si = ""
+      for(var a=0;(a < sa.length && a<5);a++){
+        if(a==4){
+          si+=sa[a]
+        }else{
+          si+=sa[a]+"| &nbsp&nbsp"
+        }
       }
+      console.log(d)
+      console.log(typeof d)
+      document.getElementById("successMessage1").innerHTML ="Previously Used Tickets:"+ si;
+      document.getElementById("successMessage1").style.visibility="visible";
     }
-    console.log(d)
-    console.log(typeof d)
-    document.getElementById("successMessage1").innerHTML ="Previously Used Tickets:"+ si;
-    document.getElementById("successMessage1").style.visibility="visible";
   }
   
   </script>
