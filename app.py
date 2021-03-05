@@ -15,6 +15,8 @@ import webbrowser
 
 app = Flask(__name__)
 
+
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -65,6 +67,7 @@ def postWorklog():
             timeSpent1=timeSpent[1:]
             date1=date[1:]
             dat11=dat1[1:]
+            skey=list(set(key))
             message = username+":"+password
             message_bytes = message.encode('ascii')
             base64_bytes = base64.b64encode(message_bytes)
@@ -182,7 +185,7 @@ def postWorklog():
     except:
         return render_template('error.html')
 
-    return render_template('index.html',res=q,rcs=rc,r_q=s_q,sq=tot_q,un_q=uns_q,cnt=count,ind=w,user=username,n_time=now_time,ent=en1,keys=key,comments=comment,timeSpents=timeSpent,dates=date,dat1s=dat1,fol=zip(key1,comment1,timeSpent1,date1,dat11))
+    return render_template('index.html',skeys=skey,res=q,rcs=rc,r_q=s_q,sq=tot_q,un_q=uns_q,cnt=count,ind=w,user=username,n_time=now_time,ent=en1,keys=key,comments=comment,timeSpents=timeSpent,dates=date,dat1s=dat1,fol=zip(key1,comment1,timeSpent1,date1,dat11))
 
 ##TESTING CODE -------------------------------------------------------------------------------------------
 '''
@@ -198,6 +201,7 @@ def postWorklog():
             timeSpent = request.form.getlist('timeSpent[]')
             date = request.form.getlist('date[]')
             dat1 = request.form.getlist('dat1[]')
+            skey=list(set(key))
             message = username+":"+password
             message_bytes = message.encode('ascii')
             base64_bytes = base64.b64encode(message_bytes)
@@ -212,7 +216,7 @@ def postWorklog():
             timeSpent1=timeSpent[1:]
             date1=date[1:]
             dat11=dat1[1:]
-            en1=401
+            en1=400
             print(en1)
             d=date[0]
             d1=datetime.strptime(d,'%Y:%m:%d %H:%M:%S.%f')
@@ -227,7 +231,7 @@ def postWorklog():
             now1 = d1.replace(tzinfo = local)
             now1 = d1.astimezone(local).isoformat()
             print(now1)
-            l=[201,401,401,401]
+            l=[201,201,201,201]
             w=[]
             count=0
             for i in range(0,len(l)-1):
@@ -247,7 +251,7 @@ def postWorklog():
     except:
         return jsonify({'trace': traceback.format_exc()})
 
-    return render_template('index.html',res=q,rcs=l,r_q=s_q,sq=tot_q,un_q=uns_q,cnt=count,ind=w,user=username,n_time=now_time,ent=en1,keys=key,comments=comment,timeSpents=timeSpent,dates=date,dat1s=dat1,fol=zip(key1,comment1,timeSpent1,date1,dat11))
+    return render_template('index.html',skeys=skey,res=q,rcs=l,r_q=s_q,sq=tot_q,un_q=uns_q,cnt=count,ind=w,user=username,n_time=now_time,ent=en1,keys=key,comments=comment,timeSpents=timeSpent,dates=date,dat1s=dat1,fol=zip(key1,comment1,timeSpent1,date1,dat11))
 
 
 '''

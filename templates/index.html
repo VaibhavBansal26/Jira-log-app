@@ -80,7 +80,94 @@ $("#res").click(function(){
   
 });
 </script>
+<script>
+  function createItem() {
+    var s = '{{skeys}}'
+    var j = localStorage.getItem("mytime");
+    console.log(s)
+    console.log(typeof s)
+    console.log(j)
+    console.log(typeof j)
+    if (j=== null){
+      localStorage.setItem("mytime", s);
+    }else{
 
+      j =  j.replace(/[\[\]']+/g, '');
+      s =  s.replace(/[\[\]']+/g, '');
+      j =  j.replace(/&#39;/g, '');
+      s =  s.replace(/&#39;/g, '');
+      console.log(typeof s)
+      console.log(s)
+      var arrA = s.split(",")
+      console.log(arrA)
+      console.log(arrA[0])
+      console.log(typeof arrA)
+      console.log(typeof j)
+      console.log(j)
+      var arrB = j.split(",")
+      console.log(arrB)
+      console.log(arrB[0])
+      console.log(typeof arrB)
+      let un = [...new Set([...arrA,...arrB])];
+      console.log(un)
+      console.log(typeof un)
+      var z = String(un)
+      console.log(z)
+      console.log(un.length)
+      localStorage.setItem("mytime", z);
+    }
+   
+}
+</script>
+{% if skeys %}
+<script>
+  createItem()
+</script>
+
+{% endif%}
+  <script>
+  function readValue() {
+    var x = localStorage.getItem("mytime");
+    console.log(typeof x)
+    x= x.replace(/&#39;/g, '')
+    console.log(x)
+    var arrc = x.split(",");
+    console.log(arrc)
+    var v=""
+    arrq= new Array(arrc.length-1)
+    for(var i=0;i<arrc.length;i++){
+      if(i == arrc.length-1){
+        arrc[i]=arrc[i].replace(/&#39;/g,'')
+        arrc[i]=arrc[i].trim()
+        arrq[i]=arrc[i]
+        v+=arrc[i]
+      }else{
+        arrc[i]=arrc[i].replace(/&#39;/g,'')
+        arrc[i]=arrc[i].trim()
+        arrq[i]=arrc[i]
+        v+=arrc[i]
+        v+=", "
+      }
+    }
+    var d = [...new Set(arrc)]
+    var ss = String(d)
+    var sa = ss.split(",")
+    var si = ""
+    for(var a=0;(a < sa.length && a<5);a++){
+      if(a==4){
+        si+=sa[a]
+      }else{
+        si+=sa[a]+"| &nbsp&nbsp"
+      }
+    }
+    console.log(d)
+    console.log(typeof d)
+    document.getElementById("successMessage1").innerHTML ="Previously Used Tickets:"+ si;
+    document.getElementById("successMessage1").style.visibility="visible";
+  }
+  
+  </script>
+ 
 <script type="text/javascript">
   $(function(){
     $('.dtpickerdemo').datetimepicker({
@@ -114,6 +201,7 @@ $("#res").click(function(){
             <ul class="nav navbar-nav navbar-right" style="margin-top: 15px;">
          <!--     <li class="head"><a href="{{url_for('index')}}" style="text-decoration: none;font-size: 16px;color: white;" >Home</a></li>-->
               <li class="head"><a href="{{url_for('getDashboard')}}" target="_blank" style="text-decoration:none;font-size:16px;color:white">Dashboard</a></li>
+             
               </ul>
           </div>
         </div>
@@ -121,9 +209,11 @@ $("#res").click(function(){
 
 <!--BODY-->
     <div style="width:95%;padding:10px;margin: 20px auto;">  
+     
+      <button onclick="readValue()" style="float:right;background-color: #2c3e50;width: 110px;height: 50px;float: right;color:white;border: 1px solid #2c3e50;border-radius: 5px;font-weight: bolder;padding: 2px;">Get Tickets</button>
  
-        <div class="alert alert-danger" id="successMessage1" style="display: none;"><strong>Failure : Check form for Errors </strong></div>
-        
+        <div class="alert alert-info" id="successMessage1" style="visibility: hidden;font-size: 14;font-weight: bold;color: grey;margin-bottom: 4px;"><strong>Failure : Check form for Errors </strong></div>
+  
         {% if res %}
         <div class="alert alert-success" id="successMessage"><strong>Success : Last Submission recorded at : {{n_time}} UTC </strong><br>
           Successful: {{r_q}} Unsuccessful: {{un_q}} <br>
@@ -141,7 +231,7 @@ $("#res").click(function(){
           <div class="alert alert-danger" id="successMessage"><strong>Failure : Server error </strong></div>
          
         {% elif ent == 401 %}
-          <div class="alert alert-danger" id="successMessage"><strong>Failure : Login Credentials are incorrect </strong></div>
+          <div class="alert alert-danger" id="successMessage" ><strong>Failure : Login Credentials are incorrect </strong></div>
          
         {% elif ent == 400 %}
           <div class="alert alert-danger" id="successMessage"><strong>Failure : Issue not found or the user does not have permission to view it. </strong></div>
